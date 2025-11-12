@@ -53,6 +53,6 @@ Open your web browser and visit `http://127.0.0.1:8090/data_analysis_with_agent`
   5. Comprehensive Group Profit Analysis: Combining time patterns, transaction networks, balance anomalies, and transaction cycles for comprehensive analysis
 * Since this is a demo project, the analysis capabilities are not yet fully developed. I will expand upon it further if you have any specific needs.
 
-## Others
+## Deepseek Model API Key 
 
 Using DeepSeek as the driving model for both the AI ​​agent and AI chatbot, I'm using my personal API key, which, of course, requires payment. You can use it with confidence as long as there's a balance in my personal account. If my account runs out of balance, you can modify the configuration to use your own DeepSeek API key:`data_analysis_with_agent/src/data_analysis_with_agent/config/config_dev.yaml` -> deepseek.api_key.
