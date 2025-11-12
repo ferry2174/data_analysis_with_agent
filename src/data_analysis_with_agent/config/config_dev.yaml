@@ -1,0 +1,34 @@
+uvicorn:
+  access_log: True
+  proxy_headers: True
+  log_config: debug
+  reload: False
+  limit_concurrency: 10
+  # 下面是gunicorn的配置
+  daemon: True                # 是否以 daemon 模式运行（后台运行）
+  graceful_timeout: 30        # 优雅关闭超时时间（秒）
+  backlog: 256                # 对待队列大小
+  worker_connections: 100     # gevent/async workder 才需要
+  timeout: 600                 # worker 最大请求处理时间（秒），超过就会被杀掉并重启
+  preload_app: False          # 是否预加载应用, False，以保证优雅重启正确执行
+  limit_request_line: 4096     # 请求行的最大长度
+  limit_request_fields: 100    # 请求头的最大数量
+  limit_request_field_size: 8190  # 请求头的最大长度
+  # 下面是通用的配置
+  workers: 1  # "workers" flag is ignored when reloading is enabled.
+  threads: 4
+  port: 8090
+  log_level: debug
+  limit_max_requests: 9999999     # 每个 worker 处理这么多请求后重启
+  max_requests_jitter: 200         # 随机请求处理时间，防止多个 worker 同时重启
+  timeout_keep_alive: 5
+
+enable_mariadb: False
+enable_doris: False
+enable_redis: False
+enable_kafka: False
+enable_proxy: False
+
+metrics_server_port: 8091
+
+pip_file_path: ~/Program/data_analysis_with_agent/.app_pid

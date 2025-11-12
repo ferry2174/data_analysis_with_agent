@@ -1,0 +1,11 @@
+uvicorn:
+  port: 8000
+  access_log: True
+  timeout_keep_alive: 5
+  proxy_headers: True
+  log_level: info
+  limit_max_requests: 1000
+  log_config: info
+  reload: False
+  workers: 99
+  limit_concurrency: 1000

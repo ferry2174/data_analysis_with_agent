@@ -1,0 +1,1 @@
+kill -TERM $(cat ~/Program/data_analysis_with_agent/.gradio_app_pid)

@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'fastapi'
+    metrics_path: '/euler_data/metrics'
+    static_configs:
+      - targets: ['43.156.236.99']
+
+  - job_name: 'unified_features'
+    static_configs:
+      - targets: ['43.156.236.99']
+        labels:
+          group: 'unified_features'
+    metrics_path: /data_analysis_with_agent/metrics

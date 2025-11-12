@@ -1,0 +1,17 @@
+{
+    "name": "data_analysis_with_agent",
+    "version": "1.0.0",
+    "description": "Project to handle backend with obfuscation requirements",
+    "main": "index.js",
+    "scripts": {
+        "preinstall": "npm config set registry https://registry.npmmirror.com/",
+        "postinstall": "html-minifier && uglify-js && cleancss"
+    },
+    "dependencies": {
+        "html-minifier": "^4.0.0",
+        "uglify-js": "^3.19.3"
+    },
+    "devDependencies": {
+        "clean-css": "^5.3.3"
+    }
+}

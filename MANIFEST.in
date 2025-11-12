@@ -1,0 +1,12 @@
+# 包含指定文件和目录
+include src/data_analysis_with_agent/frontend/static/*
+include src/data_analysis_with_agent/frontend/templates/*
+include src/data_analysis_with_agent/assets/*
+include src/data_analysis_with_agent/config/*
+include src/data_analysis_with_agent/scripts/*
+
+# 排除不需要的文件和目录
+exclude src/data_analysis_with_agent/cosyvoice/*
+exclude src/data_analysis_with_agent/matcha/*
+exclude src/data_analysis_with_agent/utilities.ipynb
+exclude src/test/*

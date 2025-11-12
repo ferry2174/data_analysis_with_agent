@@ -1,0 +1,60 @@
+uvicorn:
+  access_log: True
+  proxy_headers: True
+  log_config: debug
+  reload: False
+  limit_concurrency: 10
+  # 下面是gunicorn的配置
+  daemon: True                # 是否以 daemon 模式运行（后台运行）
+  graceful_timeout: 30        # 优雅关闭超时时间（秒）
+  backlog: 2048                # 对待队列大小
+  worker_connections: 1000     # gevent/async workder 才需要
+  timeout: 1200                  # worker 最大请求处理时间（秒），超过就会被杀掉并重启
+  preload_app: False           # 是否预加载应用
+  limit_request_line: 4096     # 请求行的最大长度
+  limit_request_fields: 100    # 请求头的最大数量
+  limit_request_field_size: 8190  # 请求头的最大长度
+  # 下面是通用的配置
+  workers: 1                # 特征整合接口设置为1，单进程，并发设置为10
+  threads: 4
+  port: 8090
+  log_level: info
+  limit_max_requests: 0   # 每个 worker 处理这么多请求后重启
+  max_requests_jitter: 100         # 随机请求处理时间，防止多个 worker 同时重启
+  timeout_keep_alive: 5
+
+enable_mariadb: False
+enable_doris: False
+enable_redis: False
+enable_kafka: False
+
+enable_proxy: False
+
+mariadb:
+  host: 127.0.0.1
+  port: 3306
+  user: root
+  password: DpFrcCxW
+  database: ind_euler_risk_data
+  min_pool_size: 1
+  max_pool_size: 10
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  from_url: redis://localhost:6379
+
+kafka:
+  bootstrap_servers: 127.0.0.1:9092
+
+unified_async_workers: 5
+
+feature_url:
+  credit: "http://10.0.0.2/euler_feature/india/order/credit_report/v1"
+  emodel: "http://10.0.0.2/euler_feature/india/order/e_model/v1"
+
+metrics_server_port: 8091
+
+extra_file_log: /home/ubuntu/data_analysis_with_agent/logs/extra_log.log
+
+pip_file_path: ~/Program/data_analysis_with_agent/.app_pid
