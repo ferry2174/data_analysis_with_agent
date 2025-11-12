@@ -1,111 +1,58 @@
 # AI Agent Powered Data Analysis Chatbot
 
-## 项目初始化
+## Installation
 
-Python版本使用3.11.10
+This project was built on Ubuntu 22.04.5 LTS and has been successfully tested under Python 3.10 and Python 3.11.
+
+* Download source code:
 
 ```shell
-conda create -n {env_name} python=3.11.10
+git clone https://github.com/ferry2174/data_analysis_with_agent.git
 ```
 
-## 将本地包发布至Devpi
-
-devpi login euler_risk --password=qYBlUs7hKzknbz4xuxMY4oFVRLoZkkrK
-devpi use euler_risk/test
-执行 devpi upload 之前，必须git提交所有文件。因为devpi会使用git命令将文件copy到临时文件夹
-
-## 用开发模式安装程序包（适用本地开发）
+* It is recommended to create a Python virtual environment with version 3.11 and then install it from the source package.
 
 ```shell
-cd ${your_workspace_dir}/${your_project_name}
+cd data_analysis_with_agent
 pip install -e .
 ```
 
-## 查看日志
-
-日志文件在 ~/data_analysis_with_agent/logs/ 目录下
-data_analysis_with_agent.log
-access.log
-metrics.log
-gunicorn.log
-uvicorn.log
-
-## 配置接口返回参数为空时，是否返回默认值
-
-fastapi接口装饰器中，加参数 response_model_exclude_none=True
-需要返回默认值的加，会返回所有字段为默认值的完整对象
-如果不需要，则会返回空对象，空对象中没有字段
-
-## 本地调试
-
-在开发工具中Debug方式执行 src/data_analysis_with_agent/backend/startup.sh
-默认会使用 src/data_analysis_with_agent/config/config_dev.yaml配置参数启动
-
-## 生产环境部署
-
-* 配置devpi作为pip源
-
-* 安装 Python 包
-pip install --upgrade data_analysis_with_agent
-
-* 优雅重启（优雅重启后打印日志有问题，暂不用）
-* 停止服务
-  * stop_data_analysis_with_agent.sh
-* 启动服务
-  * start_data_analysis_with_agent.sh test
-
-## 配置文件路径
-
-dev 环境在 ${your_project_dir}/config_dev
-test & prod 环境在 ~/${your_project_name}/config_${env}.yaml
-
-## 代码中使用配置项
-
-from data_analysis_with_agent.backend.config import ConfigManager
-ConfigManager.get_instance().get("your_key", default_value)
-
-## 数据库帮助类（线程池）
-
-## API文档路径
-
-api返回的对象要做成Pydantic数据模型，并写好description。一方面可以自动生成文档，更重要的是将来可以可以在规则引擎中读取元数据，形成提示性列表。
-/data_analysis_with_agent/docs
-
-## 核心Pydantic数据对象
-
-接口的返回对象，使用Pydantic数据模型对象，不能使用其他方式，用途：
-
-1. 自动生成api docs
-2. 自动生成元数据服务，供规则引擎等外部系统使用
-
-### 在fastapi上配置安全访问
-
-1. 安装mkcert
+* Startup gradio program
 
 ```shell
-sudo apt update
-sudo apt install libnss3-tools
-sudo apt install mkcert
+start_dawa_app.sh
 ```
 
-2. 安装根证书
+When you see `"Running on local URL: http://0.0.0.0:7860"`, it means the application has started successfully. Open your web browser and enter <http://127.0.0.1:7860> to access the application.
+
+* Launch a web service built on FastAPI to display additional graph components.
 
 ```shell
-mkcert -install
+start_dawa_app.sh dev
 ```
 
-3. 生成证书
+Open your web browser and visit `http://127.0.0.1:8090/data_analysis_with_agent`. If the page displays `"Welcome to Python restful API Project Template!"`, the REST service has started successfully.
 
-```shell
-mkcert 192.168.1.5 127.0.0.1 localhost
-```
+## Try out
 
-4. 应用证书
+* The demo program currently only supports one dataset: data_analysis_with_agent/src/data_analysis_with_agent/assets/example_data_gang_profits.zip
 
-```python
-uvicorn.run(
-    .., .., .., .., 
-    ssl_keyfile=os.path.join(get_root_path(), "assets", "cert", ".."),
-    ssl_certfile=os.path.join(get_root_path(), "assets", "cert", ".."),
-)
-```
+* Click the "上传ZIP文件" button on the page, select the file, and you can see basic information about this dataset.Click the "Upload File" button on the page and select the file. After uploading, you can see the data processing process on the interface, and then you can see basic information about this dataset.
+
+* Try using the following prompts:
+  1. View clients list
+  2. Check Luo Gang's data
+  3. View data for transactions exceeding 50,000 yuan in March 2021
+  4. Perform transaction network analysis
+  You will see the analyzed data in the upper right corner and a data visualization in the lower right corner.
+* Currently supported analysis methods include:
+  1. Time Pattern Analysis: Analyzing the temporal regularity of transactions
+  2. Amount Network Analysis: Analyzing the network relationships of transaction amounts
+  3. Balance Anomaly Analysis: Detecting abnormal balance change patterns
+  4. Transaction Cycle Analysis: Identifying possible cyclical transaction patterns
+  5. Comprehensive Group Profit Analysis: Combining time patterns, transaction networks, balance anomalies, and transaction cycles for comprehensive analysis
+* Since this is a demo project, the analysis capabilities are not yet fully developed. I will expand upon it further if you have any specific needs.
+
+## Others
+
+Using DeepSeek as the driving model for both the AI ​​agent and AI chatbot, I'm using my personal API key, which, of course, requires payment. You can use it with confidence as long as there's a balance in my personal account. If my account runs out of balance, you can modify the configuration to use your own DeepSeek API key:`data_analysis_with_agent/src/data_analysis_with_agent/config/config_dev.yaml` -> deepseek.api_key.
