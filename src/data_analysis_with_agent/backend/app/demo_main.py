@@ -447,7 +447,7 @@ def detect_transaction_cycles(df, max_cycle_length=5):
                 'length': len(cycle),
                 'min_amount': min_amount
             })
-    
+
     # 按金额排序
     return sorted(cycles, key=lambda x: -x['min_amount'])[:10]  # 返回前10个
 
@@ -461,26 +461,26 @@ def generate_cycle_visualization(results):
         ax.text(0.5, 0.5, '未检测到显著资金循环', ha='center', fontproperties=font_prop)
         ax.axis('off')
         return fig
-    
+
     fig, ax = plt.subplots(figsize=(10, 6))
-    
+
     # 显示每个循环的金额和长度
     cycles = sorted(results, key=lambda x: -x['min_amount'])
     y_pos = range(len(cycles))
     amounts = [c['min_amount'] for c in cycles]
     lengths = [c['length'] for c in cycles]
-    
+
     bars = ax.barh(y_pos, amounts, color='skyblue')
     ax.set_yticks(y_pos)
     ax.set_yticklabels([f"循环-{i+1}" for i in y_pos], fontproperties=font_prop)
     ax.set_xlabel('最小交易金额', fontproperties=font_prop)
     ax.set_title('检测到的资金循环', fontproperties=font_prop)
-    
+
     # 在条上显示长度
     for i, bar in enumerate(bars):
         width = bar.get_width()
         ax.text(width, i, f'长度: {lengths[i]}', ha='left', va='center', fontproperties=font_prop)
-    
+
     plt.tight_layout()
     return fig
 
@@ -488,26 +488,26 @@ def format_cycle_results(results):
     """格式化循环分析结果"""
     if not results:
         return "## 交易循环分析\n- 未检测到显著资金循环模式"
-    
+
     report = [
         "## 交易循环分析结果",
         f"- 检测到{len(results)}个资金循环模式",
         "- 主要循环:"
     ]
-    
+
     for i, cycle in enumerate(results[:3], 1):
         report.append(
             f"  {i}. 路径: {' → '.join(cycle['path'])} "
             f"(金额: {cycle['min_amount']:.2f}, 长度: {cycle['length']})"
         )
-    
+
     return "\n".join(report)
 
 
 ### 综合分析与风险评估函数
 def calculate_risk_score(time_results, network_results, balance_results, cycle_results):
     """计算综合风险分数"""
-    print(f"in calculate_risk_score 1")
+    print("in calculate_risk_score 1")
     risk_factors = {
         'time_risk': min(time_results['night_ratio'] * 10, 1.0),
         'network_risk': len(network_results['communities']) / 10,
@@ -516,7 +516,7 @@ def calculate_risk_score(time_results, network_results, balance_results, cycle_r
     }
 
     print(f"risk_factors: {risk_factors}")
-    
+
     # 加权计算
     weights = {
         'time_risk': 0.2,
@@ -524,7 +524,7 @@ def calculate_risk_score(time_results, network_results, balance_results, cycle_r
         'balance_risk': 0.3,
         'cycle_risk': 0.2
     }
-    
+
     total_risk = sum(risk_factors[k] * weights[k] for k in risk_factors)
 
     return {
@@ -584,6 +584,17 @@ from typing_extensions import TypedDict
 from langgraph.graph import StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
+
+from data_analysis_with_agent.backend.config import ConfigManager
+from data_analysis_with_agent.backend.constants import ENV_KEY_IN_OSENV
+
+
+env = os.getenv(ENV_KEY_IN_OSENV)
+config = ConfigManager.init_config(env=env)
+
+if not os.environ.get("DEEPSEEK_API_KEY"):
+    #os.environ["DEEPSEEK_API_KEY"] = "sk-233a5931660b4d06b0725e6ca7836495"
+    os.environ["DEEPSEEK_API_KEY"] = config.get("deepseek.api_key", "")
 
 
 if not os.environ.get("DEEPSEEK_API_KEY"):

@@ -28,10 +28,13 @@ install_requires = [
     "aiomysql==0.2.0",
     "aiokafka==0.12.0",
     "langchain-community==0.4.1",
+    "matplotlib==3.10.7",
     "plotly==6.4.0",
     "gradio==5.49.1",
     "python-louvain==0.16",
     "orjson==3.11.2",
+    "langchain_deepseek==1.0.0",
+    "langgraph==1.0.3",
 ]
 
 extras = {}

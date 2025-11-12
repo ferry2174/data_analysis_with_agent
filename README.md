@@ -2,10 +2,10 @@
 
 ## 项目初始化
 
-Python版本使用3.11.18
+Python版本使用3.11.10
 
 ```shell
-conda create -n {env_name} python=3.11.18
+conda create -n {env_name} python=3.11.10
 ```
 
 ## 将本地包发布至Devpi

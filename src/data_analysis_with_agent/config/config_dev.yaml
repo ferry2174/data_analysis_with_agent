@@ -32,3 +32,6 @@ enable_proxy: False
 metrics_server_port: 8091
 
 pip_file_path: ~/Program/data_analysis_with_agent/.app_pid
+
+deepseek:
+  api_key: sk-233a5931660b4d06b0725e6ca7836495
