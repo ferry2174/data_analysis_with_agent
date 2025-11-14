@@ -28,7 +28,7 @@ When you see `"Running on local URL: http://0.0.0.0:7860"`, it means the applica
 * Launch a web service built on FastAPI to display additional graph components.
 
 ```shell
-start_dawa_app.sh dev
+start_dawa_rest.sh dev
 ```
 
 Open your web browser and visit `http://127.0.0.1:8090/data_analysis_with_agent`. If the page displays `"Welcome to Python restful API Project Template!"`, the REST service has started successfully.
